@@ -11,7 +11,11 @@ namespace Counter
 
         public PluginOutput Execute(PluginInput input)
         {
-            var lastCount = int.Parse(input.PersistentData);
+            int lastCount = 0;
+            if (!string.IsNullOrEmpty(input.PersistentData) && int.TryParse(input.PersistentData, out int parsedCount))
+            {
+                lastCount = parsedCount;
+            }
             var result = (lastCount + 1).ToString();
             return new PluginOutput(result, result);
         }
